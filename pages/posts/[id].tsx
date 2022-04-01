@@ -3,10 +3,10 @@ import Head from "next/head";
 import { getAllPostIds, getPostData } from "../../lib/posts";
 import Date from "../../components/date";
 import utilStyles from "../../styles/utils.module.css";
-
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
 export default function Post({ postData }) {
   return (
-    <Layout>
+    <Layout home="">
       <Head>
         <title>{postData.title}</title>
       </Head>
@@ -30,7 +30,7 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   // Fetch necessary data for the blog post using params.id
   const postData = await getPostData(params.id);
   return {
@@ -38,4 +38,4 @@ export async function getStaticProps({ params }) {
       postData,
     },
   };
-}
+};
